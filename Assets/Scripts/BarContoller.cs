@@ -6,11 +6,6 @@ public class BarContoller : MonoBehaviour
 {
     private float oldX;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
