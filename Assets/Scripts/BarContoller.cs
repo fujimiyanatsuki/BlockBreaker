@@ -1,22 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 public class BarContoller : MonoBehaviour
 {
-    private float oldX;
-
-    void Update()
+    void Start()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            oldX = Camera.main.ScreenToViewportPoint(Input.mousePosition).x;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            var newX = Camera.main.ScreenToViewportPoint(Input.mousePosition).x;
-            transform.Translate(new Vector2((newX - oldX) * 20, 0));
-            oldX = newX;
-        }
+        this.UpdateAsObservable()
+            .Select(_ => Camera.main.ScreenToViewportPoint(Input.mousePosition).x)
+            .Pairwise()
+            .Subscribe(position =>
+            {
+                var deltaX = position.Current - position.Previous;
+                transform.Translate(new Vector2(deltaX * 20, 0));
+            });
     }
 }
