@@ -1,12 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Start()
     {
-        GameManager.Instance.BlockBreak();
-        Destroy(gameObject);
+        this.OnCollisionEnter2DAsObservable()
+            .Subscribe(_ =>
+            {
+                GameManager.Instance.BlockBreak();
+                Destroy(gameObject);
+            });
     }
 }
