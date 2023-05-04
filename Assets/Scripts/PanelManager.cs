@@ -23,5 +23,3 @@ public class PanelManager : SingletonBase<PanelManager>
         GameOverDialog.SetActive(false);
     }    
 }
-
-
