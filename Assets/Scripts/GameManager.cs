@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingletonBase<GameManager>
 {
-    public GameObject GameOverDialog;
-    public GameObject ClearDialog;
     public GameObject Ball;
 
     private int currentBlockNum;
@@ -19,7 +17,7 @@ public class GameManager : SingletonBase<GameManager>
     public void GameOver()
     {
         Destroy(Ball);
-        GameOverDialog.SetActive(true);
+        PanelManager.Instance.ActiveGameOverPanel();
     }
 
     public void BlockBreak()
@@ -28,7 +26,7 @@ public class GameManager : SingletonBase<GameManager>
         if (currentBlockNum == 0)
         {
             Destroy(Ball);
-            ClearDialog.SetActive(true);
+            PanelManager.Instance.ActiveClearPanel();
         }
     }
 }

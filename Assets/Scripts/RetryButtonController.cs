@@ -10,6 +10,7 @@ public class RetryButtonController : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
+            PanelManager.Instance.HidePanel();
             SceneManager.LoadScene("GameScene");
         });
     }
