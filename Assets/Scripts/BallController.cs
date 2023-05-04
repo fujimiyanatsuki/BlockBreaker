@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 public class BallController : MonoBehaviour
 {
@@ -14,5 +16,9 @@ public class BallController : MonoBehaviour
         rb.mass = 0.02f;
         rb.gravityScale = 0;
         rb.AddForce(new Vector2(speed, speed));
+
+        this.OnCollisionEnter2DAsObservable()
+            .Where(collision => collision.gameObject.CompareTag("Wall"))
+            .Subscribe(_ => GameManager.Instance.GameOver());        
     }
 }
