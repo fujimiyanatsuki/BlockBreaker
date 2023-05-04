@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonBase<GameManager>
 {
     public GameObject GameOverDialog;
     public GameObject ClearDialog;
-    public GameObject ball;
+    public GameObject Ball;
 
     private int currentBlockNum;
     public int maxBlockNum = 168;
 
-    public static GameManager Instance { get; private set; }
-
     void Start()
     {
-        Instance = this;
         currentBlockNum = maxBlockNum;
     }
 
     public void GameOver()
     {
-        Destroy(ball);
+        Destroy(Ball);
         GameOverDialog.SetActive(true);
     }
 
@@ -30,7 +27,7 @@ public class GameManager : MonoBehaviour
         currentBlockNum--;
         if (currentBlockNum == 0)
         {
-            Destroy(ball);
+            Destroy(Ball);
             ClearDialog.SetActive(true);
         }
     }
