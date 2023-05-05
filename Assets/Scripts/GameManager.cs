@@ -1,32 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameManager : SingletonBase<GameManager>
 {
-    public GameObject Ball;
+    public int BlockRows { get; private set; } = 5;
+    public int BlockColumns { get; private set; } = 8;
+    public float BlockXOffset { get; private set; } = 1.2f;
+    public float BlockYOffset { get; private set; } = 1.2f;
 
-    private int currentBlockNum;
-    public int maxBlockNum = 168;
-
-    void Start()
+    /// <summary>
+    /// Awake
+    /// </summary>
+    protected override void Awake()
     {
-        currentBlockNum = maxBlockNum;
+        base.Awake();
+        InitializeGame();
     }
 
-    public void GameOver()
+    /// <summary>
+    /// ゲームに必要な初期処理を実行
+    /// </summary>
+    public void InitializeGame()
     {
-        Destroy(Ball);
-        PanelManager.Instance.ActiveGameOverPanel();
-    }
-
-    public void BlockBreak()
-    {
-        currentBlockNum--;
-        if (currentBlockNum == 0)
-        {
-            Destroy(Ball);
-            PanelManager.Instance.ActiveClearPanel();
-        }
+        BlockCounter.Instance.Initialize(BlockRows * BlockColumns);
+        BlockManager.Instance.Initialize(BlockRows, BlockColumns, BlockXOffset, BlockYOffset);
+        BarManager.Instance.Initialize();
+        BallManager.Instance.Initialize();
     }
 }
