@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
@@ -8,7 +6,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (Instance == null)
+        if (Instance == null || Instance is null)
         {
             Instance = GetComponent<T>();
             DontDestroyOnLoad(gameObject);
