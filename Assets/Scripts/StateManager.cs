@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class StateManager : SingletonBase<StateManager>
 {
     /// <summary>

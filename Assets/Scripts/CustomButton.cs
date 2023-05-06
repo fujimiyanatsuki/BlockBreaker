@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class CustomButton : MonoBehaviour
 {
-    public ButtonManager.ButtonAction action;
+    public ButtonManager.ButtonActionType action;
 
     private void Start()
     {
