@@ -3,41 +3,81 @@ using UnityEngine;
 
 public class BlockManager : SingletonBase<BlockManager>
 {
+    /// <summary>
+    /// BlockのPrefab
+    /// </summary>
     public GameObject BlockPrefab;
+
+    /// <summary>
+    /// 列数、行数
+    /// </summary>
+    private int rows, columns;
+
+    /// <summary>
+    /// X軸の隙間、Y軸の隙間
+    /// </summary>
+    private float blockXSpacing, blockYSpacing;
+
+    /// <summary>
+    /// Y軸の一番上の位置
+    /// </summary>
+    private float topPosition;
+
 
     /// <summary>
     /// Blockに関する初期処理
     /// </summary>
-    public void Initialize(int rows, int columns, float xOffset, float yOffset)
+    public void Initialize(int rows, int columns, float blockXSpacing, float blockYSpacing, float topPosition)
     {
-        CreateBlocks(rows, columns, xOffset, yOffset);
+        this.rows = rows;
+        this.columns = columns;
+        this.blockXSpacing = blockXSpacing;
+        this.blockYSpacing = blockYSpacing;
+        this.topPosition = topPosition;
+
+        LayoutBlocks();
     }
 
-    //ここはあとで綺麗に書く
-    private void CreateBlocks(int rows, int columns, float xOffset, float yOffset)
+    /// <summary>
+    /// Blockを指定した数だけ整列させます。
+    /// </summary>
+    private void LayoutBlocks()
     {
-        // ブロック全体の幅と高さを計算
-        float totalWidth = (columns - 1) * xOffset;
-        float totalHeight = (rows - 1) * yOffset;
+        // 画面の中央を計算するためのオフセット値を算出
+        float centerOffsetX = (columns - 1) * (blockXSpacing + BlockPrefab.transform.localScale.x) / 2.0f;
 
-        // ブロック全体を中心に配置するためのオフセット
-        float offsetX = totalWidth / 2.0f;
-        float offsetY = totalHeight / 2.0f;
-
-        for (int y = 0; y < rows; y++)
+        // 行の数だけループを回す
+        for (int row = 0; row < rows; row++)
         {
-            for (int x = 0; x < columns; x++)
+            // それぞれの行におけるY座標を計算
+            var tempY = topPosition - (blockYSpacing * row);
+
+            // 列の数だけループを回す
+            for (int column = 0; column < columns; column++)
             {
-                Vector3 position = new Vector3(x * xOffset - offsetX, y * yOffset - offsetY, 0);
-                GameObject blockInstance = Instantiate(BlockPrefab, position, Quaternion.identity);
-                blockInstance.transform.SetParent(transform);
-                blockInstance.GetComponent<Block>()
-                     .OnCollideBall()
-                     .Subscribe(_ => OnCollideBlock(blockInstance))
-                     .AddTo(this);
+                // それぞれのブロックにおけるX座標を計算し、Vector3型のpositionを作成
+                Vector3 position = new Vector3(
+                    column * (blockXSpacing + BlockPrefab.transform.localScale.x) - centerOffsetX, tempY, 0);
+                GameObject blockInstance = CreateBlock(position);
+                SubscribeToBlockEvents(blockInstance);
                 blockInstance.SetActive(true);
             }
         }
+    }
+
+    private GameObject CreateBlock(Vector3 position)
+    {
+        GameObject blockInstance = Instantiate(BlockPrefab, position, Quaternion.identity);
+        blockInstance.transform.SetParent(transform);
+        return blockInstance;
+    }
+
+    private void SubscribeToBlockEvents(GameObject blockInstance)
+    {
+        blockInstance.GetComponent<Block>()
+            .OnCollideBall()
+            .Subscribe(_ => OnCollideBlock(blockInstance))
+            .AddTo(this);
     }
 
     /// <summary>
