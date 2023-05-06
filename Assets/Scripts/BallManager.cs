@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class BallManager : SingletonBase<BallManager>
 {
-    //public GameObject Ball;
-
     public GameObject BallPrefab;
     private GameObject currentBall;
 
