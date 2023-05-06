@@ -16,9 +16,13 @@ public class BallManager : SingletonBase<BallManager>
         if (currentBall == null)
         {
             CreateBall();
+            currentBall.GetComponent<Ball>().LaunchIBall();
         }
     }
 
+    /// <summary>
+    /// Ballを生成
+    /// </summary>
     public void CreateBall()
     {
         currentBall = Instantiate(BallPrefab);
@@ -27,7 +31,6 @@ public class BallManager : SingletonBase<BallManager>
             .Subscribe(_ => CallGameOver())
             .AddTo(this);
         currentBall.SetActive(true);
-        currentBall.GetComponent<Ball>().LaunchIBall();
     }
 
     /// <summary>
