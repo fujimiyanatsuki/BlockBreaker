@@ -1,9 +1,10 @@
 public class GameManager : SingletonBase<GameManager>
 {
     public int BlockRows { get; private set; } = 5;
-    public int BlockColumns { get; private set; } = 8;
-    public float BlockXOffset { get; private set; } = 1.2f;
-    public float BlockYOffset { get; private set; } = 1.2f;
+    public int BlockColumns { get; private set; } = 14;
+    public float BlockXSpacing { get; private set; } = 0.1f;
+    public float BlockYSpacing { get; private set; } = 0.4f;
+    public float BlockTopPosition { get; private set; } = 4f;
 
     /// <summary>
     /// Awake
@@ -20,7 +21,7 @@ public class GameManager : SingletonBase<GameManager>
     public void InitializeGame()
     {
         BlockCounter.Instance.Initialize(BlockRows * BlockColumns);
-        BlockManager.Instance.Initialize(BlockRows, BlockColumns, BlockXOffset, BlockYOffset);
+        BlockManager.Instance.Initialize(BlockRows, BlockColumns, BlockXSpacing, BlockYSpacing, BlockTopPosition);
         BarManager.Instance.Initialize();
         BallManager.Instance.Initialize();
     }
