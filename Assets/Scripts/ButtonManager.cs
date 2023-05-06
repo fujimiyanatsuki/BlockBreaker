@@ -5,6 +5,10 @@ public class ButtonManager : SingletonBase<ButtonManager>
         Retry
     }
 
+    /// <summary>
+    /// ボタンをクリックされた際の処理
+    /// </summary>
+    /// <param name="action"></param>
     public void HandleButtonClick(ButtonAction action)
     {
         switch (action)

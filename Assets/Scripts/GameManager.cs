@@ -18,5 +18,6 @@ public class GameManager : SingletonBase<GameManager>
         BlockCounter.Instance.Initialize(BlockManager.Instance.GetAllBlockCount());
         BarManager.Instance.Initialize();
         BallManager.Instance.Initialize();
+        PanelManager.Instance.Initialize();
     }
 }

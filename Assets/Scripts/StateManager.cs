@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StateManager : SingletonBase<StateManager>
@@ -18,7 +19,11 @@ public class StateManager : SingletonBase<StateManager>
         /// <summary>
         /// ゲームクリア
         /// </summary>
-        GameClear
+        GameClear,
+        /// <summary>
+        /// リスタート
+        /// </summary>
+        ReStart
     }
 
     /// <summary>
@@ -31,9 +36,9 @@ public class StateManager : SingletonBase<StateManager>
     /// </summary>
     public void OnGameOver()
     {
-        BallManager.Instance.DestroyBall();
-        PanelManager.Instance.ActiveGameOverPanel();
         CurrentState = GameState.GameOver;
+        BallManager.Instance.DestroyBall();
+        PanelManager.Instance.SetCanvas();
     }
 
     /// <summary>
@@ -41,9 +46,9 @@ public class StateManager : SingletonBase<StateManager>
     /// </summary>
     public void OnGameClear()
     {
-        BallManager.Instance.DestroyBall();
-        PanelManager.Instance.ActiveClearPanel();
         CurrentState = GameState.GameClear;
+        BallManager.Instance.DestroyBall();
+        PanelManager.Instance.SetCanvas();        
     }
 
     /// <summary>
@@ -51,7 +56,8 @@ public class StateManager : SingletonBase<StateManager>
     /// </summary>
     public void OnRestartGame()
     {
-        PanelManager.Instance.HidePanel();
+        CurrentState = GameState.ReStart;
+        PanelManager.Instance.SetCanvas();
         GameManager.Instance.InitializeGame();
         CurrentState = GameState.Playing;
     }    

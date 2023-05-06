@@ -1,39 +1,99 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelManager : SingletonBase<PanelManager>
 {
     /// <summary>
-    /// ゲームオーバー時のダイアログ
+    /// Panel
     /// </summary>
-    public GameObject GameOverDialog;
+    public GameObject Panel;
+    /// <summary>
+    /// ゲームクリア時の画像
+    /// </summary>
+    public Image CrearImage;
+    /// <summary>
+    /// ゲームオーバー時の画像
+    /// </summary>
+    public Image GameOverImage;
 
     /// <summary>
-    /// ゲームクリア時のダイアログ
+    /// リトライボタン
     /// </summary>
-    public GameObject ClearDialog;
+    public GameObject RetryButton;
 
     /// <summary>
-    /// ゲームオーバー時のダイアログを表示
+    /// Panelに関する初期処理
     /// </summary>
-    public void ActiveGameOverPanel()
+    public void Initialize()
     {
-        GameOverDialog.SetActive(true);
+        SetCanvas();
     }
 
     /// <summary>
-    /// ゲームクリア時のダイアログを表示
+    /// ダイアログを表示
     /// </summary>
-    public void ActiveClearPanel()
+    public void SetCanvas()
     {
-        ClearDialog.SetActive(true);
+        Panel.GetComponent<Image>().color = GetBackGroundColor();
+        SetRetryButton();
+        SetDialogImage();
+        Panel.SetActive(true);
     }
 
     /// <summary>
-    /// すべてのダイアログを非表示
+    /// リトライボタンの表示を制御
     /// </summary>
-    public void HidePanel()
+    private void SetRetryButton()
     {
-        ClearDialog.SetActive(false);
-        GameOverDialog.SetActive(false);
+        switch (StateManager.Instance.CurrentState)
+        {
+            case StateManager.GameState.GameClear:
+            case StateManager.GameState.GameOver:
+                RetryButton.SetActive(true);
+                break;
+            case StateManager.GameState.ReStart:
+            case StateManager.GameState.Playing:
+                RetryButton.SetActive(false);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Panelの色を取得
+    /// </summary>
+    /// <returns></returns>
+    private Color GetBackGroundColor()
+    {
+        switch (StateManager.Instance.CurrentState)
+        {
+            case StateManager.GameState.GameClear:
+                return new Color(0.1f, 0.2f, 0.5f, 0.5f);
+            case StateManager.GameState.GameOver:
+                return new Color(0.5f, 0, 0, 0.5f);
+        }
+        return new Color(0, 0, 0, 0);
+    }
+
+    /// <summary>
+    /// Panelの画像をセット
+    /// </summary>
+    private void SetDialogImage()
+    {
+        switch (StateManager.Instance.CurrentState)
+        {
+            case StateManager.GameState.GameClear:
+                GameOverImage.enabled = false;
+                CrearImage.enabled = true;
+                break;
+            case StateManager.GameState.GameOver:
+                CrearImage.enabled = false;
+                GameOverImage.enabled = true;
+                break;
+            case StateManager.GameState.ReStart:
+            case StateManager.GameState.Playing:
+                CrearImage.enabled = false;
+                GameOverImage.enabled = false;
+                break;
+        }
     }
 }
