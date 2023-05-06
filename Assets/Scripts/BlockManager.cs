@@ -27,15 +27,24 @@ public class BlockManager : SingletonBase<BlockManager>
     /// <summary>
     /// Blockに関する初期処理
     /// </summary>
-    public void Initialize(int rows, int columns, float blockXSpacing, float blockYSpacing, float topPosition)
+    public void Initialize()
     {
-        this.rows = rows;
-        this.columns = columns;
-        this.blockXSpacing = blockXSpacing;
-        this.blockYSpacing = blockYSpacing;
-        this.topPosition = topPosition;
+        this.rows = BlockPrefab.GetComponent<Block>().BlockRows;
+        this.columns = BlockPrefab.GetComponent<Block>().BlockColumns;
+        this.blockXSpacing = BlockPrefab.GetComponent<Block>().BlockXSpacing;
+        this.blockYSpacing = BlockPrefab.GetComponent<Block>().BlockYSpacing;
+        this.topPosition = BlockPrefab.GetComponent<Block>().BlockTopPosition;
 
         LayoutBlocks();
+    }
+
+    /// <summary>
+    /// Block全体の個数を取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetAllBlockCount()
+    {
+        return rows * columns;
     }
 
     /// <summary>
@@ -65,6 +74,11 @@ public class BlockManager : SingletonBase<BlockManager>
         }
     }
 
+    /// <summary>
+    /// BlockをPrefabをもとに生成
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     private GameObject CreateBlock(Vector3 position)
     {
         GameObject blockInstance = Instantiate(BlockPrefab, position, Quaternion.identity);
@@ -72,6 +86,10 @@ public class BlockManager : SingletonBase<BlockManager>
         return blockInstance;
     }
 
+    /// <summary>
+    /// Blockが衝突した際のイベントを購読
+    /// </summary>
+    /// <param name="blockInstance"></param>
     private void SubscribeToBlockEvents(GameObject blockInstance)
     {
         blockInstance.GetComponent<Block>()
