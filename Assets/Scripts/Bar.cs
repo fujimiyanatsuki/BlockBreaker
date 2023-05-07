@@ -9,12 +9,12 @@ public class Bar : MonoBehaviour
     /// <summary>
     /// 移動にかかる時間
     /// </summary>
-    private float MoveDuration = 0.1f;
+    private float moveDuration = 0.1f;
 
     /// <summary>
     /// リセットする際のポジション
     /// </summary>
-    private Vector3 ResetPosition = new Vector3(0, -4, 0);
+    private Vector3 resetPosition = new Vector3(0, -4, 0);
 
     /// <summary>
     /// マウスを動かした際のイベントを発行
@@ -37,7 +37,7 @@ public class Bar : MonoBehaviour
     /// </summary>
     public void ResetBarPosition()
     {
-        transform.position = ResetPosition;
+        transform.position = resetPosition;
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class Bar : MonoBehaviour
     public void MoveBar()
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.DOMoveX(mouseWorldPosition.x, MoveDuration).SetEase(Ease.Linear).SetUpdate(true);
+        transform.DOMoveX(mouseWorldPosition.x, moveDuration).SetEase(Ease.Linear).SetUpdate(true);
     }
 
     /// <summary>

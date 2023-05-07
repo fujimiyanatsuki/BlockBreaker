@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using DG.Tweening;
 
 public class Block : MonoBehaviour
 {
@@ -35,6 +36,10 @@ public class Block : MonoBehaviour
     /// </summary>
     private Subject<Unit> blockCollideSubject = new Subject<Unit>();
 
+    private float alphaZero = 0f;
+
+    private float fadeDuration = 0.3f;
+
     /// <summary>
     /// OnEnable
     /// </summary>
@@ -58,7 +63,10 @@ public class Block : MonoBehaviour
     /// </summary>
     public void DestroyBlock()
     {
-        Destroy(gameObject);
+        GetComponent<SpriteRenderer>().DOFade(alphaZero, fadeDuration).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
     }
 
     /// <summary>
