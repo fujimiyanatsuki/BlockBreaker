@@ -1,11 +1,12 @@
 public class GameManager : SingletonBase<GameManager>
 {
-    /// <summary>
-    /// Awake
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    void Start()
+    {
         InitializeGame();
     }
 

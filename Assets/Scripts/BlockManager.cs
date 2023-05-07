@@ -44,7 +44,7 @@ public class BlockManager : SingletonBase<BlockManager>
     /// <returns></returns>
     public int GetAllBlockCount()
     {
-        return rows * columns;
+        return BlockPrefab.GetComponent<Block>().GetAllBlockCount();
     }
 
     /// <summary>

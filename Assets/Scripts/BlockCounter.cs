@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class BlockCounter : SingletonBase<BlockCounter>
 {
     /// <summary>
@@ -12,6 +14,7 @@ public class BlockCounter : SingletonBase<BlockCounter>
     public void Initialize(int initialCount)
     {
         CurrentCount = initialCount;
+        Debug.Log("called Initialize:" + CurrentCount);
     }
 
     /// <summary>
@@ -20,5 +23,6 @@ public class BlockCounter : SingletonBase<BlockCounter>
     public void CountDownBlock()
     {
         CurrentCount--;
+        Debug.Log("CurrentCount:" + CurrentCount);
     }
 }

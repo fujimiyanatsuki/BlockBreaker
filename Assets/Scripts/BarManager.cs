@@ -12,7 +12,8 @@ public class BarManager : SingletonBase<BarManager>
     {
         Bar.GetComponent<Bar>()
             .OnMoveBar()
-            .Subscribe(deltaX => Bar.GetComponent<Bar>().MoveBar(deltaX))
+            .Subscribe(_ => Bar.GetComponent<Bar>().MoveBar())
             .AddTo(this);
+        Bar.GetComponent<Bar>().ResetBarPosition();
     }
 }

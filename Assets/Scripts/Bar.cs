@@ -2,43 +2,57 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using System;
+using DG.Tweening;
 
 public class Bar : MonoBehaviour
 {
     /// <summary>
-    /// Barの移動速度にかける係数
+    /// 移動にかかる時間
     /// </summary>
-    protected float Speed = 20.0f;
+    private float MoveDuration = 0.1f;
+
+    /// <summary>
+    /// リセットする際のポジション
+    /// </summary>
+    private Vector3 ResetPosition = new Vector3(0, -4, 0);
 
     /// <summary>
     /// マウスを動かした際のイベントを発行
     /// </summary>
-    private Subject<float> mouseMoveSubject = new Subject<float>();
+    private Subject<Unit> mouseMoveSubject = new Subject<Unit>();
 
     /// <summary>
     /// Start
     /// </summary>
-    void Start()
+    private void Start()
     {
         this.UpdateAsObservable()
             .Select(_ => Camera.main.ScreenToViewportPoint(Input.mousePosition).x)
             .Pairwise()
-            .Subscribe(position => mouseMoveSubject.OnNext(position.Current - position.Previous));
+            .Subscribe(_ => mouseMoveSubject.OnNext(Unit.Default));
+    }
+
+    /// <summary>
+    /// Barの位置をリセット
+    /// </summary>
+    public void ResetBarPosition()
+    {
+        transform.position = ResetPosition;
     }
 
     /// <summary>
     /// Barの移動
     /// </summary>
-    /// <param name="deltaX"></param>
-    public void MoveBar(float deltaX)
+    public void MoveBar()
     {
-        transform.Translate(new Vector2(deltaX * Speed, 0));
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.DOMoveX(mouseWorldPosition.x, MoveDuration).SetEase(Ease.Linear).SetUpdate(true);
     }
 
     /// <summary>
     /// マウスを動かした際のイベントを通知
     /// </summary>
-    public IObservable<float> OnMoveBar()
+    public IObservable<Unit> OnMoveBar()
     {
         return mouseMoveSubject;
     }
