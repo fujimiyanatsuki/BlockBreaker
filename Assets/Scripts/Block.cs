@@ -45,6 +45,15 @@ public class Block : MonoBehaviour
     }
 
     /// <summary>
+    /// Blockの全個数を取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetAllBlockCount()
+    {
+        return BlockRows * BlockColumns;
+    }
+
+    /// <summary>
     /// Blockの削除処理
     /// </summary>
     public void DestroyBlock()
