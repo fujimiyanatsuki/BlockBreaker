@@ -1,5 +1,7 @@
 using UniRx;
 using UnityEngine;
+using DG.Tweening;
+using System;
 
 public class BlockManager : SingletonBase<BlockManager>
 {
@@ -23,7 +25,6 @@ public class BlockManager : SingletonBase<BlockManager>
     /// </summary>
     private float topPosition;
 
-
     /// <summary>
     /// Blockに関する初期処理
     /// </summary>
@@ -35,7 +36,7 @@ public class BlockManager : SingletonBase<BlockManager>
         this.blockYSpacing = BlockPrefab.GetComponent<Block>().BlockYSpacing;
         this.topPosition = BlockPrefab.GetComponent<Block>().BlockTopPosition;
 
-        LayoutBlocks();
+        LayoutBlocks();   
     }
 
     /// <summary>
@@ -45,6 +46,15 @@ public class BlockManager : SingletonBase<BlockManager>
     public int GetAllBlockCount()
     {
         return BlockPrefab.GetComponent<Block>().GetAllBlockCount();
+    }
+
+    /// <summary>
+    /// Blockの整列にかかる時間を測定
+    /// </summary>
+    /// <returns></returns>
+    public float TotalLayoutTime()
+    {
+        return (rows * 0.05f + (columns - 1) * 0.05f) + 0.1f;
     }
 
     /// <summary>
@@ -69,6 +79,11 @@ public class BlockManager : SingletonBase<BlockManager>
                     column * (blockXSpacing + BlockPrefab.transform.localScale.x) - centerOffsetX, tempY, 0);
                 GameObject blockInstance = CreateBlock(position);
                 SubscribeToBlockEvents(blockInstance);
+
+                var renderer = blockInstance.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0);
+                renderer.DOFade(1f, 0.1f).SetDelay(row * 0.05f + column * 0.05f);
+
                 blockInstance.SetActive(true);
             }
         }
