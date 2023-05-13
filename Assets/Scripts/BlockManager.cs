@@ -1,7 +1,6 @@
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
-using DG.Tweening;
-using System;
 
 public class BlockManager : SingletonBase<BlockManager>
 {
@@ -36,7 +35,7 @@ public class BlockManager : SingletonBase<BlockManager>
         this.blockYSpacing = BlockPrefab.GetComponent<Block>().BlockYSpacing;
         this.topPosition = BlockPrefab.GetComponent<Block>().BlockTopPosition;
 
-        LayoutBlocks();   
+        LayoutBlocks();
     }
 
     /// <summary>
@@ -53,12 +52,24 @@ public class BlockManager : SingletonBase<BlockManager>
     /// </summary>
     /// <returns></returns>
     public float TotalLayoutTime()
-    {
+    {　
         return (rows * 0.05f + (columns - 1) * 0.05f) + 0.1f;
     }
 
     /// <summary>
-    /// Blockを指定した数だけ整列させます。
+    /// すべてのブロックを削除
+    /// </summary>
+    public void AllDestroyBlocks()
+    {
+        Block[] blocks = FindObjectsOfType<Block>();
+        foreach (Block block in blocks)
+        {
+            block.FadeOutAndFall();
+        }
+    }
+
+    /// <summary>
+    /// Blockを指定した数だけ整列
     /// </summary>
     private void LayoutBlocks()
     {
