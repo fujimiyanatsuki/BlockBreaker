@@ -14,7 +14,7 @@ public class Block : MonoBehaviour
     /// <summary>
     /// Blockの行数
     /// </summary>
-    public int BlockColumns { get; private set; } = 14;
+    public int BlockColumns { get; private set; } = 13;
 
     /// <summary>
     /// BlockのX軸の隙間
@@ -39,6 +39,12 @@ public class Block : MonoBehaviour
     private float alphaZero = 0f;
 
     private float fadeDuration = 0.3f;
+
+    // ブロックが落下する最小速度
+    public float MinFallSpeed { get; private set; } = 1f;
+
+    // ブロックが落下する最大速度
+    public float MaxFallSpeed { get; private set; } = 5f;
 
     /// <summary>
     /// OnEnable
@@ -75,5 +81,18 @@ public class Block : MonoBehaviour
     public IObservable<Unit> OnCollideBall()
     {
         return blockCollideSubject;
+    }
+
+    /// <summary>
+    /// ブロックをフェードアウトしながら落下させる
+    /// </summary>
+    public void FadeOutAndFall()
+    {
+        float fallSpeed = UnityEngine.Random.Range(MinFallSpeed, MaxFallSpeed);
+        transform.DOMoveY(-10f, fallSpeed).SetEase(Ease.InCubic);
+        GetComponent<SpriteRenderer>().DOFade(alphaZero, fadeDuration).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
     }
 }

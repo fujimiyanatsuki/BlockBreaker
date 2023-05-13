@@ -35,6 +35,7 @@ public class StateManager : SingletonBase<StateManager>
     {
         CurrentState = GameState.GameOver;
         BallManager.Instance.DestroyBall();
+        BlockManager.Instance.AllDestroyBlocks();
         PanelManager.Instance.SetCanvas();
     }
 
