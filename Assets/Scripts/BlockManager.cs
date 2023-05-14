@@ -132,6 +132,9 @@ public class BlockManager : SingletonBase<BlockManager>
     {
         block.GetComponent<Block>().DestroyBlock();
         BlockCounter.Instance.CountDownBlock();
-        if (BlockCounter.Instance.CurrentCount == 0) StateManager.Instance.OnGameClear();
+        if (BlockCounter.Instance.CurrentCount == 0)
+        {
+            StateManager.Instance.OnGameClear();
+        }
     }
 }

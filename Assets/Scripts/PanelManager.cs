@@ -66,8 +66,10 @@ public class PanelManager : SingletonBase<PanelManager>
     {
         switch (StateManager.Instance.CurrentState)
         {
+            // 画面全体に青色の背景を重ねる
             case StateManager.GameState.GameClear:
                 return new Color(0.1f, 0.2f, 0.5f, 0.5f);
+            // 画面全体に赤色の背景を重ねる
             case StateManager.GameState.GameOver:
                 return new Color(0.5f, 0, 0, 0.5f);
         }

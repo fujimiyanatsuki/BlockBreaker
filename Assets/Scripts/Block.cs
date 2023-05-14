@@ -36,15 +36,30 @@ public class Block : MonoBehaviour
     /// </summary>
     private Subject<Unit> blockCollideSubject = new Subject<Unit>();
 
+    /// <summary>
+    /// 透明度ゼロの数値
+    /// </summary>
     private float alphaZero = 0f;
 
-    private float fadeDuration = 0.3f;
+    /// <summary>
+    /// 通常Blockが破壊される時にかかる時間
+    /// </summary>
+    private float normalFadeDuration = 0.3f;
 
-    // ブロックが落下する最小速度
-    public float MinFallSpeed { get; private set; } = 1f;
+    /// <summary>
+    /// ゲームオーバーの際、Blockの破壊にかかる時間
+    /// </summary>
+    private float gameOverFadeDuration = 3.0f;
 
-    // ブロックが落下する最大速度
-    public float MaxFallSpeed { get; private set; } = 5f;
+    /// <summary>
+    /// ブロックが落下する最小速度
+    /// </summary>
+    private float MinFallSpeed = 1.0f;
+
+    /// <summary>
+    /// ブロックが落下する最大速度
+    /// </summary>
+    private float MaxFallSpeed = 3.0f;
 
     /// <summary>
     /// OnEnable
@@ -69,7 +84,7 @@ public class Block : MonoBehaviour
     /// </summary>
     public void DestroyBlock()
     {
-        GetComponent<SpriteRenderer>().DOFade(alphaZero, fadeDuration).OnComplete(() =>
+        GetComponent<SpriteRenderer>().DOFade(alphaZero, normalFadeDuration).OnComplete(() =>
         {
             Destroy(gameObject);
         });
@@ -89,8 +104,17 @@ public class Block : MonoBehaviour
     public void FadeOutAndFall()
     {
         float fallSpeed = UnityEngine.Random.Range(MinFallSpeed, MaxFallSpeed);
-        transform.DOMoveY(-10f, fallSpeed).SetEase(Ease.InCubic);
-        GetComponent<SpriteRenderer>().DOFade(alphaZero, fadeDuration).OnComplete(() =>
+        float randomX = UnityEngine.Random.Range(-10f, 10f);
+        float randomAngle = UnityEngine.Random.Range(0f, 360f);
+
+        transform
+            .DOMove(new Vector3(randomX, -10f, transform.position.z), fallSpeed)
+            .SetEase(Ease.InCubic);
+        transform
+            .DORotate(new Vector3(0f, 0f, randomAngle), fallSpeed, RotateMode.FastBeyond360);
+        GetComponent<SpriteRenderer>()
+            .DOFade(alphaZero, gameOverFadeDuration)
+            .OnComplete(() =>
         {
             Destroy(gameObject);
         });

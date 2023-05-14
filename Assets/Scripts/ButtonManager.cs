@@ -1,5 +1,8 @@
 public class ButtonManager : SingletonBase<ButtonManager>
 {
+    /// <summary>
+    /// ボタンの種別
+    /// </summary>
     public enum ButtonActionType
     {
         Retry
@@ -8,10 +11,10 @@ public class ButtonManager : SingletonBase<ButtonManager>
     /// <summary>
     /// ボタンをクリックされた際の処理
     /// </summary>
-    /// <param name="action"></param>
-    public void HandleButtonClick(ButtonActionType action)
+    /// <param name="type"></param>
+    public void HandleButtonClick(ButtonActionType type)
     {
-        switch (action)
+        switch (type)
         {
             case ButtonActionType.Retry:
                 StateManager.Instance.OnRestartGame();
