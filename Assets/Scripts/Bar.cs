@@ -22,6 +22,11 @@ public class Bar : MonoBehaviour
     private Subject<Unit> mouseMoveSubject = new Subject<Unit>();
 
     /// <summary>
+    /// Barの移動制限範囲
+    /// </summary>
+    private float minX = -7.75f, maxX = 7.75f;
+
+    /// <summary>
     /// Start
     /// </summary>
     private void Start()
@@ -46,7 +51,8 @@ public class Bar : MonoBehaviour
     public void MoveBar()
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.DOMoveX(mouseWorldPosition.x, moveDuration).SetEase(Ease.Linear).SetUpdate(true);
+        float clampedX = Mathf.Clamp(mouseWorldPosition.x, minX, maxX);
+        transform.DOMoveX(clampedX, moveDuration).SetEase(Ease.Linear).SetUpdate(true);
     }
 
     /// <summary>
