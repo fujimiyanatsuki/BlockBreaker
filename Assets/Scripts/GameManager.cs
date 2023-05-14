@@ -1,6 +1,4 @@
 using System.Collections;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 public class GameManager : SingletonBase<GameManager>
