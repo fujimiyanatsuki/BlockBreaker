@@ -14,7 +14,9 @@ https://techbookfest.org/product/jB2Fabv81T4pyefxbA7xnK
 公開後、こちらに記載予定です。
 
 unityroomのユーザーページ
+
 https://unityroom.com/users/fujimiyanatsuki
 
 質問やお問い合わせはTwitterのリプでどうぞ。
+
 https://twitter.com/fujimiyanatsuki
