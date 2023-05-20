@@ -8,15 +8,22 @@ Unity2Dでブロックくずしを作っています。
 
 https://techbookfest.org/product/jB2Fabv81T4pyefxbA7xnK
 
-# unityroom公開について
+# unityroom
 
-まだ大きなバグが残っており、2023年5月17日時点では、unityroomへは公開していません。
-公開後、こちらに記載予定です。
+下記のページで実際に遊べます。
+微妙にバグが残っており、全部ブロックをくずさなくてもクリアしちゃうことがあります。
+こっそり直しますので、現時点ではそういうものとして受けいれてください。
 
-unityroomのユーザーページ
+https://unityroom.com/games/simpleblockbreaker
 
-https://unityroom.com/users/fujimiyanatsuki
+# お問い合せ
 
-質問やお問い合わせはTwitterのリプでどうぞ。
+何かあったらTwitterのリプでどうぞ。
 
 https://twitter.com/fujimiyanatsuki
+
+# 履歴
+
+2023/05/20 
+unityroomへゲームを公開しました。
+Ballが途中めっちゃ遅くなる事象がありましたが、BallについているRigidBody2DのCollisionDetectionなる値をContinuousに変更したら、多分直りました。
