@@ -9,7 +9,7 @@ public class Block : MonoBehaviour
     /// <summary>
     /// Blockの列数
     /// </summary>
-    public int BlockRows { get; private set; } = 6;
+    public int BlockRows { get; private set; } = 3;
 
     /// <summary>
     /// Blockの行数
@@ -49,17 +49,17 @@ public class Block : MonoBehaviour
     /// <summary>
     /// ゲームオーバーの際、Blockの破壊にかかる時間
     /// </summary>
-    private float gameOverFadeDuration = 3.0f;
+    private float gameOverFadeDuration = 1.5f;
 
     /// <summary>
     /// ブロックが落下する最小速度
     /// </summary>
-    private float MinFallSpeed = 1.0f;
+    private float MinFallSpeed = 0.5f;
 
     /// <summary>
     /// ブロックが落下する最大速度
     /// </summary>
-    private float MaxFallSpeed = 3.0f;
+    private float MaxFallSpeed = 1.5f;
 
     /// <summary>
     /// OnEnable
